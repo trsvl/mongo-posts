@@ -1,47 +1,45 @@
 import React, { useState } from "react";
-import styles from "./../../styles/auth.module.scss";
+import style from "../../app/styles/auth.module.scss";
+import axios from "axios";
 
 export default function Login() {
   const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   const LoginHandler = async (e: React.FormEvent) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:3080/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+    await axios.post("http://localhost:3080/login", {
         email,
         password,
-      }),
-    });
-    console.log(response);
+    }).catch((e)=>{
+      console.log(e.response.data);
+      setEmailError(e.response.data.email)
+      setPasswordError(e.response.data.password)
+    })
+  
     
-    if (response.status === 409){
-      console.log("that email is existed");
-    } 
-    if (response.status === 200){
-      console.log("all good");
-    } 
+  
     
   };
 
   return (
-    <form onSubmit={LoginHandler} className={styles.form}>
+    <form onSubmit={LoginHandler} className={style.form}>
       <input
         type="text"
         name="email"
         onChange={(e) => setEmail(e.target.value)}
       />
+      <span>{emailError}</span>
       <input
         autoComplete="new-password"
         name="password"
         type="password"
         onChange={(e) => setPassword(e.target.value)}
       />
-      <input className={styles.fake} autoComplete="off" />
+          <span>{passwordError}</span>
+      <input className={style.fake} autoComplete="off" />
       <button>LOG IN</button>
     </form>
   );

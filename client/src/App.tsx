@@ -6,7 +6,7 @@ import Header from './pages/Header/Header';
 import { Routes, Route } from "react-router-dom"
 import Items from './pages/Items/Items';
 import Login from './pages/Auth/Login';
-import Register from './pages/Auth/Register';
+import Registration from './pages/Auth/Registration';
 
 function App() {
 
@@ -26,7 +26,7 @@ function App() {
       <Routes>
       <Route path='items' element={<Items/>}/>
       <Route path='login' element={<Login/>}/>
-      <Route path='register' element={<Register/>}/>
+      <Route path='registration' element={<Registration/>}/>
       </Routes>
     
     </div>
