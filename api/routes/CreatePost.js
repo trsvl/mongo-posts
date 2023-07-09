@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Post = require("../models/CreatePostModel");
+const User = require("../models/User");
 const multer  = require('multer');
 
 const storage = multer.diskStorage({
@@ -16,14 +17,14 @@ const storage = multer.diskStorage({
 
 router.post("/", upload.single("image"), async (req, res) => {
   try {
-    const { title, text, uid } = req.body;
+    const { title, text, author } = req.body;
     const file = req.file;
     console.log(file);
     const postDoc = await Post.create({
       title,
       image: file.filename,
       text,
-      uid
+      author,
     });
     res.status(200).json(postDoc);
   } catch (e) {
@@ -33,7 +34,10 @@ router.post("/", upload.single("image"), async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
-  const posts = await Post.find();
+  const posts = await Post.find().populate('author', "firstName lastName");
+  console.log(posts);
+  // const user = await User.findById();
+  // console.log(user);
   res.status(200).json(posts);
  })
 

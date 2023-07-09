@@ -13,6 +13,7 @@ interface InputI {
   value?: string;
   maxLength?: number;
   autoComplete?: string;
+  accept?: string;
 }
 
 export default function Input({
@@ -25,6 +26,7 @@ export default function Input({
   value,
   maxLength,
   autoComplete,
+  accept,
 }: InputI) {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const PasswordVisibleHandler = () => {
@@ -46,6 +48,7 @@ export default function Input({
           maxLength={maxLength}
           autoComplete={autoComplete}
           required
+          accept={accept}
         ></input>
         <label>
           {label}

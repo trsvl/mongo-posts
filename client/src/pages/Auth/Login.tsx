@@ -1,45 +1,64 @@
 import React, { useState } from "react";
 import style from "../../app/styles/auth.module.scss";
 import axios from "axios";
+import Input from "../../app/ui/Input";
+import { useAppDispatch } from "../../app/hooks";
+import { CheckUserTrue, getFirstName, getLastName } from "../../features/userSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordError, setPasswordError] = useState("");
+  const [formStates, setFormStates] = useState({
+    email: "",
+    emailError: "",
+    password: "",
+    passwordError: "",
+  })
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const LoginHandler = async (e: React.FormEvent) => {
     e.preventDefault();
+    setFormStates((prev) => ({ ...prev, emailError: "" }))
+    setFormStates((prev) => ({ ...prev, passwordError: "" }))
     await axios.post("http://localhost:3080/login", {
-        email,
-        password,
-    }).catch((e)=>{
+      email: formStates.email,
+      password: formStates.password,
+    }, { withCredentials: true }).then((response) => {
+      console.log(response)
+      dispatch(CheckUserTrue())
+      dispatch(getFirstName(response.data.firstName))
+      dispatch(getLastName(response.data.lastName))
+      navigate("../posts")
+    }
+    ).catch((e) => {
       console.log(e.response.data);
-      setEmailError(e.response.data.email)
-      setPasswordError(e.response.data.password)
+      setFormStates((prev) => ({ ...prev, emailError: e.response.data.email }))
+      setFormStates((prev) => ({ ...prev, passwordError: e.response.data.password }))
     })
-  
-    
-  
-    
+
+
   };
 
   return (
-    <form onSubmit={LoginHandler} className={style.form}>
-      <input
+    <form noValidate onSubmit={LoginHandler} className={style.form}>
+      <Input
         type="text"
         name="email"
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={(e) => setFormStates((prev) => ({ ...prev, email: e.target.value }))}
+        label="Email"
+        errorMessage={formStates.emailError}
+        onFocus={() => setFormStates((prev) => ({ ...prev, emailError: "" }))}
       />
-      <span>{emailError}</span>
-      <input
+      <Input
         autoComplete="new-password"
         name="password"
         type="password"
-        onChange={(e) => setPassword(e.target.value)}
+        label="Password"
+        onChange={(e) => setFormStates((prev) => ({ ...prev, password: e.target.value }))}
+        errorMessage={formStates.passwordError}
+        onFocus={() => setFormStates((prev) => ({ ...prev, passwordError: "" }))}
       />
-          <span>{passwordError}</span>
-      <input className={style.fake} autoComplete="off" />
+      <input className={style.fake} />
       <button>LOG IN</button>
     </form>
   );

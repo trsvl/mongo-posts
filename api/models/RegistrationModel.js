@@ -23,5 +23,5 @@ const RegSchema = new Schema({
   },
 });
 
-const UserModel = model("Registration", RegSchema);
+const UserModel = model("users", RegSchema);
 module.exports = UserModel;

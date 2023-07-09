@@ -12,7 +12,16 @@ body {
     text-decoration: none;
     color:inherit;
   }
+
 }
+.absolute__center{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  color: rgb(155, 151, 151);
+}
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

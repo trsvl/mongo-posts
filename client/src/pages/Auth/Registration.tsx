@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import style from "../../app/styles/auth.module.scss";
 import axios from "axios";
 import Input from "../../app/ui/Input";
+import { useAppDispatch } from "../../app/hooks";
+import { useNavigate } from "react-router-dom";
+import { CheckUserTrue } from "../../features/userSlice";
 
 export default function Registration() {
 
@@ -15,6 +18,8 @@ export default function Registration() {
     password: "",
     passwordError: "",
   })
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const RegisterHandler = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,7 +28,10 @@ export default function Registration() {
       lastName: formStates.lastName,
       email: formStates.email,
       password: formStates.password,
-    }).then((response)=>console.log(response)
+    }, { withCredentials: true }).then((response)=>{
+      navigate("../posts")
+      dispatch(CheckUserTrue())
+    }
     ) .catch((e)=>{
       console.log(e.response.data);
       setFormStates((prev)=>({...prev, firstNameError: e.response.data.firstName}))
