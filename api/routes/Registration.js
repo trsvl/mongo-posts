@@ -19,7 +19,7 @@ router.post("/", async (req, res) => {
       const token = jwt.sign(
         { email: userDoc.email, author: userDoc._id, firstName: userDoc.firstName, lastName: userDoc.lastName},
         process.env.JWT_SECRET,
-        { expiresIn: "1h" }
+        { expiresIn: "100h" }
       );
       res.cookie("token", token,{ httpOnly: true }).json({ success: true });
   } catch (e) {

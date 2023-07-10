@@ -34,11 +34,14 @@ router.post("/", upload.single("image"), async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
-  const posts = await Post.find().populate('author', "firstName lastName");
-  console.log(posts);
-  // const user = await User.findById();
-  // console.log(user);
-  res.status(200).json(posts);
+  const { lim } = req.query
+  const postsLength = (await Post.find()).length
+  const posts = await Post.find().populate('author', "firstName lastName").limit(lim)
+  const send = {
+    posts: posts,
+    postsLength: postsLength,
+  }
+  res.status(200).json(send);
  })
 
 module.exports = router;
