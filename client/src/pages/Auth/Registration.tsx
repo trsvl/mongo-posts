@@ -4,7 +4,7 @@ import axios from "axios";
 import Input from "../../app/ui/Input";
 import { useAppDispatch } from "../../app/hooks";
 import { useNavigate } from "react-router-dom";
-import { CheckUserTrue } from "../../features/userSlice";
+import { CheckUserTrue, getFirstName, getLastName } from "../../features/userSlice";
 
 export default function Registration() {
 
@@ -31,6 +31,8 @@ export default function Registration() {
     }, { withCredentials: true }).then((response)=>{
       navigate("../posts")
       dispatch(CheckUserTrue())
+      dispatch(getFirstName(formStates.firstName))
+      dispatch(getLastName(formStates.lastName))
     }
     ) .catch((e)=>{
       console.log(e.response.data);

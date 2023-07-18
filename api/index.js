@@ -29,12 +29,14 @@ const logRoute = require("./routes/Login");
 const profileRoute = require("./routes/Profile");
 const logoutRoute = require("./routes/Logout");
 const createPostRoute = require("./routes/CreatePost");
+const ediPostRoute = require("./routes/EditPost");
 
 app.use("/registration", regRoute);
 app.use("/login", logRoute);
 app.use("/profile", profileRoute);
 app.use("/logout", logoutRoute);
 app.use("/createpost", createPostRoute);
+app.use("/editpost", ediPostRoute);
 
 app.listen(port, () => {
   console.log("server is running");

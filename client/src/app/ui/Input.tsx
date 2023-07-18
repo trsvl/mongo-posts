@@ -48,6 +48,7 @@ export default function Input({
           maxLength={maxLength}
           autoComplete={autoComplete}
           required
+          multiple={type === "file" ? true : false}
           accept={accept}
         ></input>
         <label>

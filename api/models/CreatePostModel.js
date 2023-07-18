@@ -10,10 +10,10 @@ const postSchema = new Schema({
     required: [true, "Enter a title"],
   },
   image: {
-    type: String,
+    type: Array,
     required: [true, "Enter an image"],
   },
-  text: {
+  description: {
     type: String,
     required: [true, "Enter a text"],
   },

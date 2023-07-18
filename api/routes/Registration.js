@@ -14,17 +14,27 @@ router.post("/", async (req, res) => {
       lastName,
       email,
       password: bcrypt.hashSync(password, salt),
-    })
+    });
 
-      const token = jwt.sign(
-        { email: userDoc.email, author: userDoc._id, firstName: userDoc.firstName, lastName: userDoc.lastName},
-        process.env.JWT_SECRET,
-        { expiresIn: "100h" }
-      );
-      res.cookie("token", token,{ httpOnly: true }).json({ success: true });
+    const token = jwt.sign(
+      {
+        email: userDoc.email,
+        author: userDoc._id,
+        firstName: userDoc.firstName,
+        lastName: userDoc.lastName,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "100h" }
+    );
+    res.cookie("token", token, { httpOnly: true }).json({ success: true });
   } catch (e) {
     console.log(e.message);
-    res.status(400).json(e.message);
+    res.status(400).json({
+      firstName: e.errors?.firstName?.message,
+      lastName: e.errors?.lastName?.message,
+      email: e.errors?.email?.message,
+      password: e.errors?.password?.message,
+    });
   }
 });
 

@@ -1,6 +1,7 @@
 import React, {  useState } from 'react'
 import style from "../app/styles/posts.module.scss"
 import LoadingPosts from '../app/ui/LoadingPosts';
+import axios from 'axios';
 
 interface ItemsI {
   item: {
@@ -11,12 +12,15 @@ interface ItemsI {
     author: { firstName: string, lastName: string },
     updatedAt: string,
     length: number,
-  }
+  },
+  isEdit?: boolean,
 }
 
-const Post: React.FC<ItemsI> = ({ item }) => {
+const EditPost: React.FC<ItemsI> = ({ item, isEdit }) => {
 
   const [loading, setLoading] = useState(true);
+  const [edit,setEdit] = useState(false);
+  const [title, setTitle] = useState<string>(item.title);
 
   const transformDateHandler = (dateString: string) => {
     const date = new Date(dateString);
@@ -35,14 +39,43 @@ const Post: React.FC<ItemsI> = ({ item }) => {
   const onLoadHandler = () => {
     setLoading(false)
   }
+const updateItemHandler = async () => {
+  setEdit(false)
+  try {
+    const response = await axios.patch(
+      `http://localhost:3080/editpost/${item._id}`,
+      {
+        title,
+     }
+    );
+    console.log(response.data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+const deleteItemHandler = async () => {
 
+  try {
+      const response = await axios.delete(`http://localhost:3080/editpost/${item._id}`);
+      console.log(response.data);
+  } catch (error) {
+      console.error(error);
+  }
+}
 
   return (
     <>
+    {isEdit && <>
+    {edit ? <p onClick={updateItemHandler}>Save</p> : <p onClick={()=>setEdit(true)}>Edit</p>}
+    <p onClick={deleteItemHandler}>Delete Post</p>
+    </>}
         {loading &&   <LoadingPosts limit={1} />}
       <div className={style.post__wrapper} key={item._id}
       style={{ display: loading ? "none" : "block" }}>
-      <h1>{item.title}</h1>
+      {edit ? <input   type="text"
+                name="title"
+                value={title}
+              onChange={(e)=>setTitle(e.target.value)}/> : <h1>{title}</h1>}
       <div className={item.image.length < 3 && item.image.length > 1 ? style.images__two : item.image.length > 2 ? style.images__three : style.images__one}
       >
       {item.image.map((img,i)=>{
@@ -67,4 +100,4 @@ const Post: React.FC<ItemsI> = ({ item }) => {
   
   )
 }
-export default Post;
+export default EditPost;

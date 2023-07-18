@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import style from "../app/styles/posts.module.scss"
 import Post from './Post';
+import { useAppSelector } from '../app/hooks';
+import EditPost from './EditPost';
 
 interface ItemsI {
   _id: string,
@@ -13,18 +15,20 @@ interface ItemsI {
   length: number,
 }
 
-export default function Posts() {
+export default function EditPosts() {
   const [loading, setLoading] = useState(true);
   const [limit, setLimit] = useState(0);
   const [postsLength, setPostsLength] = useState(0);
   const [posts, setPosts] = useState<ItemsI[]>([]);
   const postsPerLoading = 5;
+  const author = useAppSelector(state => state.user.author)
 
   const getPosts = async () => {
 
-    await axios.get("http://localhost:3080/createpost", {
+    await axios.get("http://localhost:3080/editpost", {
       params: {
         lim: limit + postsPerLoading,
+        author: author,
       },
     }).then((response) => {
       setPostsLength(response.data.postsLength)
@@ -71,7 +75,7 @@ export default function Posts() {
         {posts.length > 0 ? posts.map((item) => {
           return (
             <React.Fragment key={item._id}>
-              <Post item={item} />
+              <EditPost isEdit={true} item={item} />
             </React.Fragment>
 
           )
