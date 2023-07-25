@@ -1,11 +1,12 @@
-.wrapper{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    img{
-        max-width: 640px;
-    }
-    .post__wrapper{
-        background-color: red;
-    }
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  div {
+    display: block;
+    max-width: 1220px;
+    width: 100%;
+    height: 500px;
+    background-color: rgb(206, 206, 206);
+  }
 }

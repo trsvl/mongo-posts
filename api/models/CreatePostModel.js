@@ -1,4 +1,3 @@
-const { ObjectId } = require("mongodb");
 const mongoose = require("mongoose");
 const User = require("../models/User");
 
@@ -11,7 +10,6 @@ const postSchema = new Schema({
   },
   image: {
     type: Array,
-    required: [true, "Enter an image"],
   },
   description: {
     type: String,

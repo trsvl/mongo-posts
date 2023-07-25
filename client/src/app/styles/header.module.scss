@@ -1,12 +1,77 @@
-header{
-    background-color: red;
-    padding: 20px 100px;
-    nav{
-        display: flex;
-        justify-content: space-between;
-        &>div{
-            display: flex;
-            gap: 30px;
-        }
+@mixin font {
+  font-size: 1.2rem;
+  letter-spacing: 3px;
+}
+
+header {
+  background-color: rgb(238, 238, 238);
+  border-bottom: 1px solid black;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding: 20px 100px;
+  user-select: none;
+  nav {
+    display: flex;
+    justify-content: space-between;
+    & > div {
+      display: flex;
+      gap: 30px;
+    }
+  }
+}
+.name {
+  display: flex;
+  gap: 7px;
+  position: relative;
+  align-items: center;
+  cursor: pointer;
+  @include font();
+  img {
+    width: 15px;
+  }
+}
+.list {
+  position: absolute;
+  bottom: -182px;
+  border: 1px solid black;
+  padding: 5px;
+  background-color: white;
+  p {
+    font-size: 1.2rem;
+    line-height: 2.5rem;
+    white-space: nowrap;
+    padding: 5px 10px;
+    &:hover {
+      background-color: rgb(236, 236, 236);
+    }
+  }
+}
+.auth {
+  @include font();
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+@media (max-width:900px) {
+    header {
+        padding: 15px 70px;
+    }
+    .list {
+        bottom: -177px;
+    }
+}
+@media (max-width:600px) {
+    header {
+        padding: 10px 50px;
+    }
+    .list {
+        bottom: -172px;
+    }
+}
+@media (max-width:550px) {
+    header {
+        padding: 10px 10px;
     }
 }

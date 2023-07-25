@@ -31,28 +31,30 @@ router.post("/", async (req, res) => {
 
     if (!userDoc) {
       return res.status(400).json({
-        email: "Incorrect email or password"
+        email: "Incorrect email or password",
       });
     }
 
     const passed = bcrypt.compareSync(password, userDoc.password);
 
-    if (passed){
+    if (passed) {
       const token = jwt.sign(
-        { email: userDoc.email, author: userDoc._id, firstName: userDoc.firstName, lastName: userDoc.lastName},
+        {
+          email: userDoc.email,
+          author: userDoc._id,
+          firstName: userDoc.firstName,
+          lastName: userDoc.lastName,
+        },
         process.env.JWT_SECRET,
         { expiresIn: "100h" }
       );
-      res.cookie("token", token,{ httpOnly: true }).json({ success: true });
+      res.cookie("token", token, { httpOnly: true }).json({ success: true });
     } else {
       return res.status(400).json({
-        email: "Incorrect email or password"
+        email: "Incorrect email or password",
       });
     }
-
-   
   } catch (e) {
-    console.log(e.message);
     res.status(400).json(e.message);
   }
 });

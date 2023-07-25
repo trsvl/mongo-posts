@@ -1,28 +1,26 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const bcrypt = require("bcryptjs");
-const cookieParser = require("cookie-parser")
+const cookieParser = require("cookie-parser");
 require("dotenv").config();
 
 const app = express();
 
 app.use(express.json());
-app.use(cookieParser())
-app.use("/uploads", express.static("uploads"))
-app.use(cors({credentials:true, origin:"http://localhost:3000"}));
-app.use(express.urlencoded({
-  extended: false,
+app.use(cookieParser());
+app.use("/uploads", express.static("uploads"));
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+app.use(
+  express.urlencoded({
+    extended: false,
   })
- );
+);
 
 const port = 3080;
 
-
 mongoose.connect(process.env.MONGO_CONNECT).then(() => {
-  console.log("conntected MONGO");
+  console.log("Mongo is connected");
 });
-
 
 const regRoute = require("./routes/Registration");
 const logRoute = require("./routes/Login");

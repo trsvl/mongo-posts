@@ -21,7 +21,6 @@ export default function Posts() {
   const postsPerLoading = 5;
 
   const getPosts = async () => {
-
     await axios.get("http://localhost:3080/createpost", {
       params: {
         lim: limit + postsPerLoading,
@@ -42,14 +41,12 @@ export default function Posts() {
   }, [])
 
   useEffect(() => {
-    let timeoutId: any;
-
+    let timeoutId: NodeJS.Timeout;
     const handleScroll = () => {
       clearTimeout(timeoutId);
       const a = document.documentElement.scrollTop;
       const b = document.documentElement.scrollHeight;
       const c = document.documentElement.clientHeight;
-
       timeoutId = setTimeout(() => {
         if ((a / (b - c)) * 100 > 60 && !(postsLength <= limit)) {
 
@@ -57,7 +54,6 @@ export default function Posts() {
         }
       }, 1000);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll)
@@ -65,20 +61,18 @@ export default function Posts() {
   }, [postsLength, limit]);
 
   return (
-    <div
-      style={{ display: loading ? "none" : "flex" }}>
-      <div className={style.posts__wrapper}>
-        {posts.length > 0 ? posts.map((item) => {
-          return (
-            <React.Fragment key={item._id}>
-              <Post item={item} />
-            </React.Fragment>
 
-          )
-        })
-          : <h1 className='absolute__center'>No posts</h1>
-        }
-      </div>
+    <div className={style.posts__wrapper}
+      style={{ display: loading ? "none" : "flex" }}>
+      {posts.length > 0 ? posts.map((item) => {
+        return (
+          <React.Fragment key={item._id}>
+            <Post item={item} />
+          </React.Fragment>
+        )
+      })
+        : <h1 className='absolute__center'>No posts</h1>
+      }
     </div>
   )
 }

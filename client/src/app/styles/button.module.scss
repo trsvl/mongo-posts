@@ -1,0 +1,15 @@
+@mixin btn {
+  width: 100%;
+  padding: 10px 20px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+.btn__on {
+  @include btn();
+  cursor: pointer;
+}
+.btn__off {
+  @include btn();
+  cursor: default;
+}

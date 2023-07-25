@@ -1,25 +1,26 @@
 const mongoose = require("mongoose");
+
 const { Schema, model } = mongoose;
 
 const RegSchema = new Schema({
   firstName: {
     type: String,
-    required: [true, "Enter a first name"],
+    required: true,
   },
   lastName: {
     type: String,
-    required: [true, "Enter a last name"],
+    required: true,
   },
   email: {
     type: String,
-    required: [true, "Enter an email address"],
+    required: true,
     unique: true,
     match: [/.+\@.+\..+/, "Please add a valid email address"],
   },
   password: {
     type: String,
-    required: [true, "Enter a password"],
-    minLength: [6, "Password too short"],
+    required: true,
+    minLength: [6, "Password must be at least 6 characters long"],
   },
 });
 

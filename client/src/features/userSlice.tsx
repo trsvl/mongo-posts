@@ -1,13 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
-
-
-
 interface stateI {
   checkUser: boolean | null,
   author: string,
   firstName: string,
   lastName: string,
+  updatePosts: boolean,
 }
 
 const initialState: stateI = {
@@ -15,6 +12,7 @@ const initialState: stateI = {
   author: "",
   firstName: "",
   lastName: "",
+  updatePosts: false,
 }
 
 const userSlice = createSlice({
@@ -36,9 +34,12 @@ const userSlice = createSlice({
     getLastName: (state, action) => {
       state.lastName = action.payload
     },
+    getUpdatePosts: (state) => {
+      state.updatePosts = !state.updatePosts;
+    },
   }
 })
 
-export const { CheckUserFalse, CheckUserTrue, getUserId, getFirstName, getLastName } = userSlice.actions
+export const { CheckUserFalse, CheckUserTrue, getUserId, getFirstName, getLastName, getUpdatePosts } = userSlice.actions
 
 export default userSlice.reducer

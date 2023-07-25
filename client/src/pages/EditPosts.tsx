@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import style from "../app/styles/posts.module.scss"
-import Post from './Post';
 import { useAppSelector } from '../app/hooks';
 import EditPost from './EditPost';
 
@@ -16,15 +15,16 @@ interface ItemsI {
 }
 
 export default function EditPosts() {
+
   const [loading, setLoading] = useState(true);
   const [limit, setLimit] = useState(0);
   const [postsLength, setPostsLength] = useState(0);
   const [posts, setPosts] = useState<ItemsI[]>([]);
   const postsPerLoading = 5;
   const author = useAppSelector(state => state.user.author)
+  const updatePosts = useAppSelector(state => state.user.updatePosts)
 
   const getPosts = async () => {
-
     await axios.get("http://localhost:3080/editpost", {
       params: {
         lim: limit + postsPerLoading,
@@ -43,25 +43,21 @@ export default function EditPosts() {
 
   useEffect(() => {
     getPosts();
-  }, [])
+  }, [updatePosts])
 
   useEffect(() => {
-    let timeoutId: any;
-
+    let timeoutId: NodeJS.Timeout;
     const handleScroll = () => {
       clearTimeout(timeoutId);
       const a = document.documentElement.scrollTop;
       const b = document.documentElement.scrollHeight;
       const c = document.documentElement.clientHeight;
-
       timeoutId = setTimeout(() => {
         if ((a / (b - c)) * 100 > 60 && !(postsLength <= limit)) {
-
           getPosts();
         }
       }, 1000);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll)
@@ -75,9 +71,8 @@ export default function EditPosts() {
         {posts.length > 0 ? posts.map((item) => {
           return (
             <React.Fragment key={item._id}>
-              <EditPost isEdit={true} item={item} />
+              <EditPost item={item} />
             </React.Fragment>
-
           )
         })
           : <h1 className='absolute__center'>No posts</h1>

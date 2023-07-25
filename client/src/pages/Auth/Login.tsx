@@ -5,6 +5,7 @@ import Input from "../../app/ui/Input";
 import { useAppDispatch } from "../../app/hooks";
 import { CheckUserTrue, getFirstName, getLastName } from "../../features/userSlice";
 import { useNavigate } from "react-router-dom";
+import Button from "../../app/ui/Button";
 
 export default function Login() {
   const [formStates, setFormStates] = useState({
@@ -15,6 +16,7 @@ export default function Login() {
   })
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const buttonCondition = formStates.email && formStates.password
 
   const LoginHandler = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,19 +26,15 @@ export default function Login() {
       email: formStates.email,
       password: formStates.password,
     }, { withCredentials: true }).then((response) => {
-      console.log(response)
       dispatch(CheckUserTrue())
-       dispatch(getFirstName(response.data.firstName))
-       dispatch(getLastName(response.data.lastName))
+      dispatch(getFirstName(response.data.firstName))
+      dispatch(getLastName(response.data.lastName))
       navigate("../posts")
     }
     ).catch((e) => {
-      console.log(e.response.data);
       setFormStates((prev) => ({ ...prev, emailError: e.response.data.email }))
       setFormStates((prev) => ({ ...prev, passwordError: e.response.data.password }))
     })
-
-
   };
 
   return (
@@ -59,7 +57,7 @@ export default function Login() {
         onFocus={() => setFormStates((prev) => ({ ...prev, passwordError: "" }))}
       />
       <input className={style.fake} />
-      <button>LOG IN</button>
+      <Button condition={buttonCondition} name={"LOG IN"} />
     </form>
   );
 }

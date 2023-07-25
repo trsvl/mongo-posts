@@ -9,11 +9,12 @@ const salt = bcrypt.genSaltSync(10);
 router.post("/", async (req, res) => {
   try {
     const { firstName, lastName, email, password } = req.body;
+
     const userDoc = await User.create({
       firstName,
       lastName,
       email,
-      password: bcrypt.hashSync(password, salt),
+      password: password.length < 6 ? "0" : bcrypt.hashSync(password, salt),
     });
 
     const token = jwt.sign(
