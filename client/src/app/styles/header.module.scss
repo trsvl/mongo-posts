@@ -54,24 +54,24 @@ header {
   gap: 20px;
 }
 
-@media (max-width:900px) {
-    header {
-        padding: 15px 70px;
-    }
-    .list {
-        bottom: -177px;
-    }
+@media (max-width: 900px) {
+  header {
+    padding: 15px 70px;
+  }
+  .list {
+    bottom: -177px;
+  }
 }
-@media (max-width:600px) {
-    header {
-        padding: 10px 50px;
-    }
-    .list {
-        bottom: -172px;
-    }
+@media (max-width: 600px) {
+  header {
+    padding: 10px 50px;
+  }
+  .list {
+    bottom: -172px;
+  }
 }
-@media (max-width:550px) {
-    header {
-        padding: 10px 10px;
-    }
+@media (max-width: 550px) {
+  header {
+    padding: 10px 10px;
+  }
 }

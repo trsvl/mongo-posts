@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { useAppSelector } from './app/hooks';
 import Header from './pages/Header';
 import { Routes, Route, Navigate } from "react-router-dom"
@@ -20,10 +19,10 @@ function App() {
           <Route path="/" element={<Navigate to="/posts" replace={true} />} />
           <Route path='posts' element={<Posts />} />
           {checkUser
-            ? 
+            ?
             <>
-            <Route path='createpost' element={<CreatePost />} />
-            <Route path='editpost' element={<EditPosts />} />
+              <Route path='createpost' element={<CreatePost />} />
+              <Route path='editpost' element={<EditPosts />} />
             </>
             :
             <>

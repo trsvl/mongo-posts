@@ -25,7 +25,7 @@ export default function EditPosts() {
   const updatePosts = useAppSelector(state => state.user.updatePosts)
 
   const getPosts = async () => {
-    await axios.get("http://localhost:3080/editpost", {
+    await axios.get("https://mongo-posts.onrender.com/editpost", {
       params: {
         lim: limit + postsPerLoading,
         author: author,

@@ -22,7 +22,7 @@ export default function Login() {
     e.preventDefault();
     setFormStates((prev) => ({ ...prev, emailError: "" }))
     setFormStates((prev) => ({ ...prev, passwordError: "" }))
-    await axios.post("http://localhost:3080/login", {
+    await axios.post("https://mongo-posts.onrender.com/login", {
       email: formStates.email,
       password: formStates.password,
     }, { withCredentials: true }).then((response) => {

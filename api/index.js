@@ -9,14 +9,12 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use("/uploads", express.static("uploads"));
-app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+app.use(cors({ credentials: true, origin: "https://mongo-posts.onrender.com" }));
 app.use(
   express.urlencoded({
     extended: false,
   })
 );
-
-const port = 3080;
 
 mongoose.connect(process.env.MONGO_CONNECT).then(() => {
   console.log("Mongo is connected");
@@ -36,6 +34,6 @@ app.use("/logout", logoutRoute);
 app.use("/createpost", createPostRoute);
 app.use("/editpost", ediPostRoute);
 
-app.listen(port, () => {
+app.listen(process.env.PORT || 5500, () => {
   console.log("server is running");
 });

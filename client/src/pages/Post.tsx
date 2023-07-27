@@ -1,4 +1,4 @@
-import React, { useEffect, ReactElement , useRef, useState } from 'react'
+import React, { useEffect, ReactElement, useRef, useState } from 'react'
 import style from "../app/styles/posts.module.scss"
 import LoadingPosts from '../app/ui/LoadingPosts';
 
@@ -13,7 +13,7 @@ interface ItemsI {
     length: number,
   },
   isEdit?: boolean,
-  editDiv?: ReactElement ,
+  editDiv?: ReactElement,
 }
 
 interface OverflowObjI {
@@ -47,7 +47,6 @@ const Post: React.FC<ItemsI> = ({ item, isEdit, editDiv }) => {
     return formattedDate
   }
 
-
   const onLoadHandler = () => {
     setLoading(false)
   }
@@ -56,15 +55,12 @@ const Post: React.FC<ItemsI> = ({ item, isEdit, editDiv }) => {
     const handleResize = () => {
       const element = titleRef.current;
       if (element) {
-        setOverflowObj((prev: any) => ({ ...prev, isOverflowTitle: element.scrollHeight > element.clientHeight }))
-        setOverflowObj((prev: any) => ({ ...prev, cursorPointerTitle: element.scrollHeight > element.clientHeight }))
+        setOverflowObj((prev: OverflowObjI) => ({ ...prev, isOverflowTitle: element.scrollHeight > element.clientHeight }))
+        setOverflowObj((prev: OverflowObjI) => ({ ...prev, cursorPointerTitle: element.scrollHeight > element.clientHeight }))
       }
     }
-
     handleResize();
-
     window.addEventListener('resize', handleResize);
-
     return () => {
       window.removeEventListener('resize', handleResize);
     };
@@ -74,15 +70,12 @@ const Post: React.FC<ItemsI> = ({ item, isEdit, editDiv }) => {
     const handleResize = () => {
       const element = descriptionRef.current;
       if (element) {
-        setOverflowObj((prev: any) => ({ ...prev, isOverflowDescription: element.scrollHeight > element.clientHeight }))
-        setOverflowObj((prev: any) => ({ ...prev, cursorPointerDescription: element.scrollHeight > element.clientHeight }))
+        setOverflowObj((prev: OverflowObjI) => ({ ...prev, isOverflowDescription: element.scrollHeight > element.clientHeight }))
+        setOverflowObj((prev: OverflowObjI) => ({ ...prev, cursorPointerDescription: element.scrollHeight > element.clientHeight }))
       }
     }
-
     handleResize();
-
     window.addEventListener('resize', handleResize);
-
     return () => {
       window.removeEventListener('resize', handleResize);
     };
@@ -92,37 +85,31 @@ const Post: React.FC<ItemsI> = ({ item, isEdit, editDiv }) => {
     (item.image.length < 1) && setLoading(false)
   }, [])
 
-
   return (
     <>
       {loading && item.image.length > 0 && <LoadingPosts limit={1} />}
       <div className={style.post__wrapper} key={item._id}
         style={{ display: loading ? "none" : "block" }}>
-          {!isEdit
-          ?   <div className={style.author}>
-          <p>{item.author.firstName} {item.author.lastName}</p>
-          <p>{transformDateHandler(item.updatedAt)}</p>
-        </div>
-          : 
+        {!isEdit
+          ? <div className={style.author}>
+            <p>{item.author.firstName} {item.author.lastName}</p>
+            <p>{transformDateHandler(item.updatedAt)}</p>
+          </div>
+          :
           <div className={style.author__edit}>
-             <p>{item.author.firstName} {item.author.lastName}</p>
-          <p>{transformDateHandler(item.updatedAt)}</p>
+            <p>{item.author.firstName} {item.author.lastName}</p>
+            <p>{transformDateHandler(item.updatedAt)}</p>
             {editDiv}
-            </div>
-          
-        
-          }
-      
-
+          </div>
+        }
         <h1 style={{
           display: overFlowObj.isOverflowTitle ? "-webkit-box" : overFlowObj.cursorPointerTitle ? "block" : "-webkit-box",
           cursor: overFlowObj.cursorPointerTitle ? "pointer" : "default"
         }}
-          onClick={() => setOverflowObj((prev: any) => ({ ...prev, isOverflowTitle: !prev.isOverflowTitle }))}
+          onClick={() => setOverflowObj((prev: OverflowObjI) => ({ ...prev, isOverflowTitle: !prev.isOverflowTitle }))}
           className={style.title} ref={titleRef}>{item.title}  </h1>
-
-        {overFlowObj.cursorPointerTitle && overFlowObj.isOverflowTitle && <p onClick={() => setOverflowObj((prev: any) => ({ ...prev, isOverflowTitle: !prev.isOverflowTitle }))} className={style.overflow__message}>[show]</p>}
-        {overFlowObj.cursorPointerTitle && !overFlowObj.isOverflowTitle && <p onClick={() => setOverflowObj((prev: any) => ({ ...prev, isOverflowTitle: !prev.isOverflowTitle }))} className={style.overflow__message}>[hide]</p>}
+        {overFlowObj.cursorPointerTitle && overFlowObj.isOverflowTitle && <p onClick={() => setOverflowObj((prev: OverflowObjI) => ({ ...prev, isOverflowTitle: !prev.isOverflowTitle }))} className={style.overflow__message}>[show]</p>}
+        {overFlowObj.cursorPointerTitle && !overFlowObj.isOverflowTitle && <p onClick={() => setOverflowObj((prev: OverflowObjI) => ({ ...prev, isOverflowTitle: !prev.isOverflowTitle }))} className={style.overflow__message}>[hide]</p>}
         {
           item.image.length > 0 ?
             <div className={item.image.length < 3 && item.image.length > 1 ? style.images__two : item.image.length > 2 ? style.images__three : style.images__one}
@@ -132,7 +119,7 @@ const Post: React.FC<ItemsI> = ({ item, isEdit, editDiv }) => {
                   <img
                     className={style[`img${i}`]}
                     key={img}
-                    src={`http://localhost:3080/uploads/${img}`}
+                    src={`https://mongo-posts.onrender.com/uploads/${img}`}
                     alt="image"
                     onLoad={onLoadHandler}
                     draggable={false}
@@ -147,10 +134,10 @@ const Post: React.FC<ItemsI> = ({ item, isEdit, editDiv }) => {
           display: overFlowObj.isOverflowDescription ? "-webkit-box" : overFlowObj.cursorPointerDescription ? "block" : "-webkit-box",
           cursor: overFlowObj.cursorPointerDescription ? "pointer" : "default"
         }}
-          onClick={() => setOverflowObj((prev: any) => ({ ...prev, isOverflowDescription: !prev.isOverflowDescription }))}
+          onClick={() => setOverflowObj((prev: OverflowObjI) => ({ ...prev, isOverflowDescription: !prev.isOverflowDescription }))}
           className={style.description} ref={descriptionRef} dangerouslySetInnerHTML={{ __html: formattedDescription }}></p>
-        {overFlowObj.cursorPointerDescription && overFlowObj.isOverflowDescription && <p onClick={() => setOverflowObj((prev: any) => ({ ...prev, isOverflowDescription: !prev.isOverflowDescription }))} className={style.overflow__message}>[show]</p>}
-        {overFlowObj.cursorPointerDescription && !overFlowObj.isOverflowDescription && <p onClick={() => setOverflowObj((prev: any) => ({ ...prev, isOverflowDescription: !prev.isOverflowDescription }))} className={style.overflow__message}>[hide]</p>}
+        {overFlowObj.cursorPointerDescription && overFlowObj.isOverflowDescription && <p onClick={() => setOverflowObj((prev: OverflowObjI) => ({ ...prev, isOverflowDescription: !prev.isOverflowDescription }))} className={style.overflow__message}>[show]</p>}
+        {overFlowObj.cursorPointerDescription && !overFlowObj.isOverflowDescription && <p onClick={() => setOverflowObj((prev: OverflowObjI) => ({ ...prev, isOverflowDescription: !prev.isOverflowDescription }))} className={style.overflow__message}>[hide]</p>}
       </div>
     </>
   )
