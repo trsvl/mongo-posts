@@ -62,7 +62,7 @@ export default function CreatePost() {
     const CreatePostHandler = async (e: React.FormEvent) => {
         e.preventDefault();
         if (formStates.files.length === 0) {
-            await axios.post("https://mongo-posts.onrender.com/createpost/noimg", {
+            await axios.post("https://mongo-posts-api.onrender.com/createpost/noimg", {
                 title: formStates.title,
                 files: [],
                 description: formStates.description,
@@ -90,7 +90,7 @@ export default function CreatePost() {
             }
             formData.append("description", formStates.description)
             formData.append("author", author)
-            await axios.post("https://mongo-posts.onrender.com/createpost/img", formData).then(() => {
+            await axios.post("https://mongo-posts-api.onrender.com/createpost/img", formData).then(() => {
                 setFormStates({
                     title: "",
                     files: [],

@@ -21,7 +21,7 @@ export default function Posts() {
   const postsPerLoading = 5;
 
   const getPosts = async () => {
-    await axios.get("https://mongo-posts.onrender.com/createpost", {
+    await axios.get("https://mongo-posts-api.onrender.com/createpost", {
       params: {
         lim: limit + postsPerLoading,
       },

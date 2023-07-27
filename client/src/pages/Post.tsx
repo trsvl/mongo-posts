@@ -119,7 +119,7 @@ const Post: React.FC<ItemsI> = ({ item, isEdit, editDiv }) => {
                   <img
                     className={style[`img${i}`]}
                     key={img}
-                    src={`https://mongo-posts.onrender.com/uploads/${img}`}
+                    src={`https://mongo-posts-api.onrender.com/uploads/${img}`}
                     alt="image"
                     onLoad={onLoadHandler}
                     draggable={false}

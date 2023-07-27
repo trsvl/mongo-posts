@@ -18,7 +18,7 @@ export default function Header() {
   const refName = useRef<HTMLDivElement>(null);
 
   const logoutHandler = () => {
-    axios.post("https://mongo-posts.onrender.com/logout", null,
+    axios.post("https://mongo-posts-api.onrender.com/logout", null,
       { withCredentials: true }).then(() => navigate("/login")).catch((e) => {
         console.log(e.message);
       })
@@ -28,7 +28,7 @@ export default function Header() {
   }
 
   useEffect(() => {
-    axios.get("https://mongo-posts.onrender.com/profile",
+    axios.get("https://mongo-posts-api.onrender.com/profile",
       { withCredentials: true }).then((response) => {
         if (response.status === 200) {
           dispatch(CheckUserTrue())

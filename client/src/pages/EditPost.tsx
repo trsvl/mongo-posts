@@ -46,7 +46,7 @@ const EditPost: React.FC<ItemsI> = ({ item }) => {
     try {
       if (formStates.files.length === 0) {
         const response = await axios.patch(
-          `https://mongo-posts.onrender.com/editpost/nonew/${item._id}`,
+          `https://mongo-posts-api.onrender.com/editpost/nonew/${item._id}`,
           {
             title: formStates.title,
             image: previewImages,
@@ -72,7 +72,7 @@ const EditPost: React.FC<ItemsI> = ({ item }) => {
         formData.append("description", formStates.description)
         formData.append("remainImagesArray", JSON.stringify(remainImagesArray))
         formData.append("deleteImagesArray", JSON.stringify(deleteImagesArray))
-        await axios.patch(`https://mongo-posts.onrender.com/editpost/new/${item._id}`, formData).then((response) => console.log(response)
+        await axios.patch(`https://mongo-posts-api.onrender.com/editpost/new/${item._id}`, formData).then((response) => console.log(response)
         )
         dispatch(getUpdatePosts())
       }
@@ -83,7 +83,7 @@ const EditPost: React.FC<ItemsI> = ({ item }) => {
 
   const deleteItemHandler = async () => {
     try {
-      await axios.delete(`https://mongo-posts.onrender.com/editpost/${item._id}`);
+      await axios.delete(`https://mongo-posts-api.onrender.com/editpost/${item._id}`);
       dispatch(getUpdatePosts())
     } catch (error) {
       console.error(error);
@@ -159,7 +159,7 @@ const EditPost: React.FC<ItemsI> = ({ item }) => {
               return (
                 (previewImages[i]) ?
                   <div key={imgIndex} className={style__create__post.image__wrapper}>
-                    <img className={style__create__post.selected__img} src={initialImages.includes(previewImages[i]) ? `https://mongo-posts.onrender.com/uploads/${previewImages[i]}` : previewImages[i]}
+                    <img className={style__create__post.selected__img} src={initialImages.includes(previewImages[i]) ? `https://mongo-posts-api.onrender.com/uploads/${previewImages[i]}` : previewImages[i]}
                       alt={`Preview image ${imgIndex}`}
                       draggable={false}
                     />

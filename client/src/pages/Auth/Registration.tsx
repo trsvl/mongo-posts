@@ -25,7 +25,7 @@ export default function Registration() {
 
   const RegisterHandler = async (e: React.FormEvent) => {
     e.preventDefault();
-    await axios.post("https://mongo-posts.onrender.com/registration", {
+    await axios.post("https://mongo-posts-api.onrender.com/registration", {
       firstName: formStates.firstName,
       lastName: formStates.lastName,
       email: formStates.email,
