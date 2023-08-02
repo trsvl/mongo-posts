@@ -9,7 +9,7 @@ const container = document.getElementById("root")!;
 const root = createRoot(container);
 
 root.render(
-  <BrowserRouter>
+  <BrowserRouter basename="https://mongo-posts.onrender.com">
     <Provider store={store}>
       <App />
     </Provider>
