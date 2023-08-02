@@ -16,18 +16,18 @@ function App() {
       <Header />
       <main>
         <Routes>
-          <Route path={process.env.REACT_APP_PUBLIC_URL + "/"} element={<Navigate to={process.env.REACT_APP_PUBLIC_URL + "/posts"} replace={true} />} />
-          <Route path={process.env.REACT_APP_PUBLIC_URL + '/posts'} element={<Posts />} />
+          <Route path="/" element={<Navigate to="/posts" replace={true} />} />
+          <Route path='/posts' element={<Posts />} />
           {checkUser
             ?
             <>
-              <Route path={process.env.REACT_APP_PUBLIC_URL + '/createpost'} element={<CreatePost />} />
-              <Route path={process.env.REACT_APP_PUBLIC_URL + '/editpost'} element={<EditPosts />} />
+              <Route path='/createpost' element={<CreatePost />} />
+              <Route path='/editpost' element={<EditPosts />} />
             </>
             :
             <>
-              <Route path={process.env.REACT_APP_PUBLIC_URL + '/login'} element={<Login />} />
-              <Route path={process.env.REACT_APP_PUBLIC_URL + '/registration'} element={<Registration />} />
+              <Route path='/login' element={<Login />} />
+              <Route path='/registration' element={<Registration />} />
             </>
           }
           <Route path='*' element={<h1 className='absolute__center'>Not Found</h1>} />
