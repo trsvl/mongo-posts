@@ -16,20 +16,21 @@ function App() {
       <Header />
       <main>
         <Routes>
-          <Route path="https://mongo-posts.onrender.com" element={<Navigate to="https://mongo-posts.onrender.com/posts" replace={true} />} />
-          <Route path='https://mongo-posts.onrender.com/posts' element={<Posts />} />
+          <Route path="/" element={<Navigate to="/posts" replace={true} />} />
+          <Route path='/posts' element={<Posts />} />
           {checkUser
             ?
             <>
-              <Route path='https://mongo-posts.onrender.com/createpost' element={<CreatePost />} />
-              <Route path='https://mongo-posts.onrender.com/editpost' element={<EditPosts />} />
+              <Route path='/createpost' element={<CreatePost />} />
+              <Route path='/editpost' element={<EditPosts />} />
             </>
             :
             <>
-              <Route path='https://mongo-posts.onrender.com/login' element={<Login />} />
-              <Route path='https://mongo-posts.onrender.com/registration' element={<Registration />} />
+              <Route path='/login' element={<Login />} />
+              <Route path='/registration' element={<Registration />} />
             </>
           }
+          <Route path='*' element={<h1 className='absolute__center'>Not Found</h1>} />
         </Routes>
       </main>
     </>
